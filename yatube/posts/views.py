@@ -1,23 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 
+# Импортируем модель, чтобы обратиться к ней
+from .models import Post, Group
+
 
 def index(request):
-    template = 'posts/index.html'
-    title = 'Это главная страница проекта Yatube'
+    posts = Post.objects.order_by('-pub_date')[:10]
     context = {
-        'title': title,
-        'text': 'Главная старница',
+        'posts': posts,
     }
-    return render(request, template, context)
+    return render(request, 'posts/index.html', context)
 
 
 def group_posts(request, slug):
-    template = 'posts/group_list.html'
-    title = 'Здесь будет информация о группах проекта Yatube'
+    group = get_object_or_404(Group, slug=slug)
+    posts = Post.object.filter(group=group).order_by('-pu_date')[:10]
     context = {
-        'title': title,
-        'text': 'Группы'
+        'group': group,
+        'posts': posts,
     }
-    return render(request, template, context)
+    return render(request, 'posts/group_list.html', context)
