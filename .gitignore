@@ -136,4 +136,6 @@ get-pip_script.txt
 
 .idea
 
+# вечно какие-то проблемы, ну почему?!
+.gitattributes
 
